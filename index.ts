@@ -16,23 +16,35 @@ client.on('ready', () => {
 
 client.on('messageCreate', (message) => {
   if (message.content === 'ping') {
-    message.react('🏓').catch(console.error);
-    message.reply({
-      content: 'pong',
-    });
+    message
+      .react('🏓')
+      .then(() => console.log('Reacted to message'))
+      .catch(console.error);
+    message
+      .reply({
+        content: 'pong',
+      })
+      .then(() => console.log('Returned the ball'))
+      .catch(console.error);
   }
 });
 
 client.on('messageCreate', (message) => {
   if (message.content === 'cowsay') {
-    message.reply({
-      content: `
+    message
+      .reply({
+        content: `
       \`\`\`
       ${output}
       \`\`\`
       `,
-    });
-    message.react('🥩').catch(console.error);
+      })
+      .then(() => console.log('Drew a cow'))
+      .catch(console.error);
+    message
+      .react('🥩')
+      .then(() => console.log('Reacted to message'))
+      .catch(console.error);
   }
 });
 
