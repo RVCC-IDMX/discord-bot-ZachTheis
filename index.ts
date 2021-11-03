@@ -16,6 +16,7 @@ client.on('ready', () => {
 
 client.on('messageCreate', (message) => {
   if (message.content === 'ping') {
+    message.react('🏓').catch(console.error);
     message.reply({
       content: 'pong',
     });
@@ -31,6 +32,7 @@ client.on('messageCreate', (message) => {
       \`\`\`
       `,
     });
+    message.react('🥩').catch(console.error);
   }
 });
 
