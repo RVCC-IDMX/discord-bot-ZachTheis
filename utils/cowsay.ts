@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 
