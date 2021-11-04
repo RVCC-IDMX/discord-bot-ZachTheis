@@ -37,6 +37,10 @@ client.on('messageCreate', (message) => {
       output = 'The cows are too big for the barn.';
     }
     message
+      .react('🥩')
+      .then(() => console.log('Reacted to message'))
+      .catch(console.error);
+    message
       .reply({
         content: `
         \`\`\`${output}
@@ -44,10 +48,6 @@ client.on('messageCreate', (message) => {
       `,
       })
       .then(() => console.log('Drew a cow'))
-      .catch(console.error);
-    message
-      .react('🥩')
-      .then(() => console.log('Reacted to message'))
       .catch(console.error);
   }
 });
