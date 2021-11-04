@@ -8,6 +8,16 @@ import { default as cowsay, specificCow } from './utils/cowsay';
 
 dotenv.config();
 
+const CHANNELS = process.env.CHANNELS || null;
+
+if (!CHANNELS) {
+  console.error('CHANNELS is not defined');
+  process.exit(1);
+}
+
+const channels = CHANNELS.split(',');
+console.table(channels);
+
 const client = new DiscordJS.Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
@@ -19,6 +29,7 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', (message) => {
+  if (!channels.includes(message.channel.id)) return;
   if (message.content.substring(0, 3) === prefix) {
     const input = message.content;
     const command = input.slice(3).trim();
