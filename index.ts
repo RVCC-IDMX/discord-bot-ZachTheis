@@ -1,6 +1,6 @@
 import DiscordJS, { Intents } from 'discord.js';
 import dotenv from 'dotenv';
-import { say } from 'cowsay';
+import cowsay from './utils/cowsay';
 
 dotenv.config();
 
@@ -29,26 +29,12 @@ client.on('messageCreate', (message) => {
 
 client.on('messageCreate', (message) => {
   if (message.content === 'cowsay') {
-    let output: string = say({
-      text: 'Good luck on your midterms!',
-      r: true,
-    });
-    if (output.length > 2000) {
-      output = 'The cows are too big for the barn.';
-    }
     message
       .react('🥩')
       .then(() => console.log('Reacted to message'))
       .catch(console.error);
-    message
-      .reply({
-        content: `
-        \`\`\`${output}
-      \`\`\`
-      `,
-      })
-      .then(() => console.log('Drew a cow'))
-      .catch(console.error);
+    const output = cowsay();
+    message.reply(output).then(console.log).catch(console.error);
   }
 });
 
