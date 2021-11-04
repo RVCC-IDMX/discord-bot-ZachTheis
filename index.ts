@@ -1,9 +1,10 @@
+/* eslint-disable import/no-named-default */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 
 import DiscordJS, { Intents } from 'discord.js';
 import dotenv from 'dotenv';
-import cowsay from './utils/cowsay';
+import { default as cowsay, specificCow } from './utils/cowsay';
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ client.on('messageCreate', (message) => {
     const input = message.content;
     const command = input.slice(3).trim();
     const args = command.split(' ');
-    if (args[1] === 'ping') {
+    if (args[0] === 'ping') {
       message
         .react('🏓')
         .then(() => console.log('Reacted to message'))
@@ -34,16 +35,24 @@ client.on('messageCreate', (message) => {
         .then(() => console.log('Returned the ball'))
         .catch(console.error);
     }
-    if (args[1] === 'cowsay') {
+    if (args[0] === 'cowsay') {
       message
         .react('🥩')
         .then(() => console.log('Reacted to message'))
         .catch(console.error);
-      const output = cowsay();
-      message
-        .reply(output)
-        .then(() => console.log('Drew a cow'))
-        .catch(console.error);
+      if (args.length === 1) {
+        const output = cowsay();
+        message
+          .reply(output)
+          .then(() => console.log('Drew a random cow'))
+          .catch(console.error);
+      } else if (args.length === 2) {
+        const output = specificCow(args[1]);
+        message
+          .reply(output)
+          .then(() => console.log('Drew a specified cow'))
+          .catch(console.error);
+      }
     }
   }
 });
