@@ -4,7 +4,10 @@ import { say } from 'cowsay';
 
 dotenv.config();
 
-const output: string = say({ text: "It's the Midterm! The steaks are high!" });
+const output: string = say({
+  text: "My favorite place on campus is the students' union!",
+  f: 'karl_marx',
+});
 
 const client = new DiscordJS.Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
