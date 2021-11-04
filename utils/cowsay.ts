@@ -1,9 +1,11 @@
 import { say } from 'cowsay';
 import getRandomInt from './random';
+import quotes from './quotes.json';
 
 export default function () {
+  const random = getRandomInt(0, quotes.length);
   let output: string = say({
-    text: 'Good luck on your midterms!',
+    text: `${quotes[random].quote} - ${quotes[random].author}`,
     r: true,
   });
   output = `
