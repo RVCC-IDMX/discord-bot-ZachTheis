@@ -1,4 +1,5 @@
 import { say } from 'cowsay';
+import getRandomInt from './random';
 
 export default function () {
   let output: string = say({

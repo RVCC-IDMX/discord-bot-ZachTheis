@@ -34,7 +34,10 @@ client.on('messageCreate', (message) => {
       .then(() => console.log('Reacted to message'))
       .catch(console.error);
     const output = cowsay();
-    message.reply(output).then(console.log).catch(console.error);
+    message
+      .reply(output)
+      .then(() => console.log('Drew a cow'))
+      .catch(console.error);
   }
 });
 
