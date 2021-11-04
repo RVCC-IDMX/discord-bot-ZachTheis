@@ -1,3 +1,6 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+
 import { say } from 'cowsay';
 import getRandomInt from './random';
 import quotes from './quotes.json';
