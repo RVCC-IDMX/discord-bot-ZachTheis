@@ -4,11 +4,6 @@ import { say } from 'cowsay';
 
 dotenv.config();
 
-const output: string = say({
-  text: "My favorite place on campus is the students' union!",
-  f: 'karl_marx',
-});
-
 const client = new DiscordJS.Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
@@ -34,11 +29,17 @@ client.on('messageCreate', (message) => {
 
 client.on('messageCreate', (message) => {
   if (message.content === 'cowsay') {
+    let output: string = say({
+      text: 'Good luck on your midterms!',
+      r: true,
+    });
+    if (output.length > 2000) {
+      output = 'The cows are too big for the barn.';
+    }
     message
       .reply({
         content: `
-      \`\`\`
-      ${output}
+        \`\`\`${output}
       \`\`\`
       `,
       })
