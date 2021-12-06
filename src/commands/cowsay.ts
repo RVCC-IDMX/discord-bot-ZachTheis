@@ -3,11 +3,12 @@
 /* eslint-disable import/no-unresolved */
 
 import { say, IOptions } from 'cowsay';
-import getRandomInt from './random';
-import quotes from './quotes.json';
-import cows from './cows.json';
+import { Message } from 'discord.js';
+import getRandomInt from '../utils/random';
+import quotes from '../utils/quotes.json';
+import cows from '../utils/cows.json';
 
-export default function (name: string = '') {
+function cowsay(name: string = '') {
   const random = getRandomInt(0, quotes.length);
   const opts: IOptions = {
     text: `${quotes[random].quote} - ${quotes[random].author}`,
@@ -28,3 +29,18 @@ export default function (name: string = '') {
   }
   return output;
 }
+
+export default {
+  callback: (message: Message, ...args: string[]) => {
+    message
+      .react('🥩')
+      .then(() => console.log('Reacted to message'))
+      .catch(console.error);
+
+    const output = cowsay(args[1]);
+    message
+      .reply(output)
+      .then(() => console.log(`Drew a ${args[1] ? args[1] : 'random cow'}`))
+      .catch(console.error);
+  },
+};
