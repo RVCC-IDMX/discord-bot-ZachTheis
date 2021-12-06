@@ -2,44 +2,27 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 
-import { say } from 'cowsay';
+import { say, IOptions } from 'cowsay';
 import getRandomInt from './random';
 import quotes from './quotes.json';
 import cows from './cows.json';
 
-export default function () {
+export default function (name: string = '') {
   const random = getRandomInt(0, quotes.length);
-  let output: string = say({
+  const opts: IOptions = {
     text: `${quotes[random].quote} - ${quotes[random].author}`,
-    r: true,
-  });
-  output = `
-        \`\`\`${output}
-      \`\`\`
-      `;
-  if (output.length > 2000) {
-    output = 'The cows are too big for the barn.';
-  }
-  return output;
-}
-
-export function specificCow(name: string) {
-  const random = getRandomInt(0, quotes.length);
+    f: name,
+  };
   let output: string;
-  if (cows.includes(name)) {
-    output = say({
-      text: `${quotes[random].quote} - ${quotes[random].author}`,
-      f: name,
-    });
-    output = `
-        \`\`\`${output}
+
+  if (name === 'help') return `The available cows are:\n${cows.join(', ')}`;
+  if (!!name && !cows.includes(name)) return "That cow isn't in our herd.";
+  if (!name) opts.r = true;
+
+  output = `
+        \`\`\`\n${say(opts).replace(/```/g, "``'")}\n
       \`\`\`
       `;
-  } else if (name === 'help') {
-    output = `The available cows are:\n${cows.join(', ')}`;
-  } else {
-    output = "That cow isn't in our herd.";
-  }
   if (output.length > 2000) {
     output = 'The cows are too big for the barn.';
   }
