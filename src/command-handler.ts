@@ -1,8 +1,12 @@
+/* eslint-disable import/extensions */
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
 import dotenv from 'dotenv';
 import { Client } from 'discord.js';
+// eslint-disable-next-line import/no-unresolved
 import getFiles from './get-files';
+
+console.log(getFiles);
 
 dotenv.config();
 
@@ -15,6 +19,8 @@ if (process.env.NODE_ENV === 'production') {
   src = 'dist';
   console.log('Running in production mode');
 }
+
+console.log('Running handler.');
 
 export default (client: Client) => {
   const commands = {} as {
@@ -37,6 +43,7 @@ export default (client: Client) => {
   console.log(commands);
 
   client.on('messageCreate', (message) => {
+    console.log(message.content);
     if (message.author.bot || !message.content.startsWith(prefix)) {
       return;
     }
