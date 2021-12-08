@@ -29,41 +29,4 @@ client.on('ready', () => {
   console.log('The bot is ready');
 });
 
-// client.on('messageCreate', (message) => {
-//   if (!channels.includes(message.channel.id)) return;
-//   if (message.content.substring(0, 3) !== prefix) return;
-
-//   const input = message.content;
-//   const command = input.slice(3).trim();
-//   const args = command.split(' ');
-
-// ping
-// if (args[0] === 'ping') {
-//   message
-//     .react('🏓')
-//     .then(() => console.log('Reacted to message'))
-//     .catch(console.error);
-//   message
-//     .reply({
-//       content: 'pong',
-//     })
-//     .then(() => console.log('Returned the ball'))
-//     .catch(console.error);
-// }
-
-// cowsay
-//   if (args[0] === 'cowsay') {
-// message
-//   .react('🥩')
-//   .then(() => console.log('Reacted to message'))
-//   .catch(console.error);
-
-// const output = cowsay(args[1]);
-// message
-//   .reply(output)
-//   .then(() => console.log(`Drew a ${args[1] ? args[1] : 'random cow'}`))
-//   .catch(console.error);
-//   }
-// });
-
 client.login(process.env.TOKEN);
