@@ -37,10 +37,10 @@ export default {
       .then(() => console.log('Reacted to message'))
       .catch(console.error);
 
-    const output = cowsay(args[1]);
+    const output = cowsay(args[0]);
     message
       .reply(output)
-      .then(() => console.log(`Drew a ${args[1] ? args[1] : 'random cow'}`))
+      .then(() => console.log(`Drew a ${args[0] ? args[0] : 'random cow'}`))
       .catch(console.error);
   },
 };
