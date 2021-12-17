@@ -9,14 +9,15 @@ import quotes from '../utils/quotes.json';
 import cows from '../utils/cows.json';
 
 export default {
+  // eslint-disable-next-line consistent-return
   callback: (message: Message, ...args: string[]) => {
     const name = args[0];
     if (name === 'help') return `The available cows are:\n${cows.join(', ')}`;
     if (!!name && !cows.includes(name)) return "That cow isn't in our herd.";
 
     const random = getRandomInt(0, quotes.length);
-    const quote = quotes[random].quote;
-    const author = quotes[random].author;
+    const quoteEmbed = quotes[random].quote;
+    const authorEmbed = quotes[random].author;
 
     const opts: IOptions = {
       f: name,
@@ -40,8 +41,8 @@ export default {
       .setDescription(output)
       .addFields(
         //   { name: 'Regular field title', value: 'Some value here' },
-        { name: '\u200B', value: `"${quote}"` },
-        { name: '\u200B', value: `-${author}` }
+        { name: '\u200B', value: `"${quoteEmbed}"` },
+        { name: '\u200B', value: `-${authorEmbed}` }
         //   { name: 'Inline field title', value: 'Some value here', inline: true }
       )
       // .addField('Inline field title', 'Some value here', true)
