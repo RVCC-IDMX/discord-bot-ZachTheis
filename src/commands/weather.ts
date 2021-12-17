@@ -4,40 +4,25 @@
 import { Message, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 
-// const axios = require('axios');
-// const { OPEN_WEATHER } = process.env;
+const axios = require('axios');
+
+const { OPEN_WEATHER } = process.env;
 
 export default {
-  callback: (message: Message, ...args: string[]) => {
-    const inputCity = args[0];
-    let weatherData;
-    exports.handler = async (event) => {
-      weatherData = await fetch(
-        `api.openweathermap.org/data/2.5/weather?q=${inputCity}&units=imperial`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
-          },
-        }
-      )
-        .then(
-          (response) =>
-            // eslint-disable-next-line implicit-arrow-linebreak
-            response.json()
-          // eslint-disable-next-line function-paren-newline
-        )
-        .catch((error) => console.log('error', error));
+  callback: async (message: Message, ...args: string[]) => {
+    const inputCity = args.join(' ');
+    const url = `api.openweathermap.org/data/2.5/weather?q=${inputCity}&units=imperial&appid=${OPEN_WEATHER}`;
+    let response;
+    try {
+      response = await axios.get(url);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+      message.reply('All oracles are currently busy.');
+      return;
+    }
 
-      return {
-        statusCode: 200,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(weatherData),
-      };
-    };
-
+    const weatherData = response.data;
     const city = weatherData.name;
     const countryCode = weatherData.sys.country;
     const weatherDescription = weatherData.description;
@@ -77,29 +62,3 @@ export default {
       .catch(console.error);
   },
 };
-
-// export default {
-//   callback: (message: Message, ...args: string[]) => {
-//     const inputCity = args[0];
-//     // eslint-disable-next-line no-unused-vars
-//     exports.handler = async (event, context) => {
-// eslint-disable-next-line max-len
-//       const url = `api.openweathermap.org/data/2.5/weather?q=${inputCity}&units=imperial&appid=${OPEN_WEATHER}`;
-//       try {
-//         const weatherStream = await axios.get(url, {
-//           headers: {
-//             Accept: 'application/jsons',
-//             'User-Agent': 'axios 0.21.1',
-//           },
-//         });
-//         return {
-//           statusCode: 200,
-//           body: JSON.stringify(weatherStream.data),
-//         };
-//       } catch (err) {
-//         console.log(err);
-//         return { statusCode: 422, body: err.stack };
-//       }
-//     };
-//   },
-// };
